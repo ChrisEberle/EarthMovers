@@ -4,8 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SaveMenu : MonoBehaviour
+public class SaveMenu : Menu
 {
+    [Header("Menu Navigation")]
+
+    [SerializeField] private SaveSlotsMenu saveSlotsMenu;
+
+
     [Header("Menu Buttons")]
 
     [SerializeField] private Button newGameButton;
@@ -23,12 +28,18 @@ public class SaveMenu : MonoBehaviour
 
     public void OnNewGameClicked()
     {
-        DisableMenuButtons();
-        // create a new game - which will initialize our game data
-        DataPersistenceManager.instance.NewGame();
-        // Load the gameplay scene
-        SceneManager.LoadSceneAsync("GameState");
+        saveSlotsMenu.ActivateMenu(false);
+        this.DeactivateMenu();
     }
+
+
+    public void OnLoadGameClicked()
+    {
+        saveSlotsMenu.ActivateMenu(true);
+        DataPersistenceManager.instance.SaveGame();
+        this.DeactivateMenu();
+    }
+
 
     public void OnContinueGameClicked()
     {
@@ -46,6 +57,17 @@ public class SaveMenu : MonoBehaviour
     public void returnToMain()
     {
        // SceneManager.LoadSceneAsync("MainMenu");
+    }
+
+    public void ActivateMenu()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+
+    public void DeactivateMenu()
+    {
+        this.gameObject.SetActive(false);
     }
 
 }

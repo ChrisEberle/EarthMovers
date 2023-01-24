@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IDataPersistence
 {
+    public GameData gd;
     public float moveSpeed = 1f;
     public Rigidbody2D rb;
     public Animator animator;
@@ -27,10 +29,20 @@ public class PlayerController : MonoBehaviour, IDataPersistence
             moveSpeed = 1f;
         }
 
-             // spend money for no reason
-           
-       
-        
+                 // spend money for no reason
+                 if( Input.GetKeyDown(KeyCode.Space))
+           {
+                gd.money -= 100;
+                Debug.Log(" new balance = " + gd.money);
+           }
+      
+
+           if( Input.GetKeyDown(KeyCode.Escape))
+           {
+            DataPersistenceManager.instance.SaveGame();
+
+            SceneManager.LoadSceneAsync("GameLoader");
+           }
     }
 
     public void LoadData(GameData data)

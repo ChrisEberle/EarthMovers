@@ -14,4 +14,5 @@ public class GameData
         this.money = 1000;
         playerPosition = Vector3.zero;
     }
+
 }
