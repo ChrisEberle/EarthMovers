@@ -10,11 +10,16 @@ public class FileDataHandler
 
     private string dataFileName = "";
 
+    private bool useEncryption = false;
 
-    public FileDataHandler(string dataDirPath, string dataFileName)
+    private readonly string encryptionCodeWord = "word";
+
+
+    public FileDataHandler(string dataDirPath, string dataFileName, bool useEncryption)
     {
         this.dataDirPath = dataDirPath;
         this.dataFileName = dataFileName;
+        this.useEncryption = useEncryption;
     }
 
     public GameData Load()
@@ -34,6 +39,12 @@ public class FileDataHandler
                     {
                         dataToLoad = reader.ReadToEnd();
                     }
+                }
+
+                // optionally decrypt the data
+                if (useEncryption)
+                {
+                    dataToLoad = EncryptDecrypt(dataToLoad);
                 }
 
                 // deserialize the data from the Json back into the C# object
@@ -59,6 +70,12 @@ public class FileDataHandler
             // serialize the C# game data object into Json
             string dataToStore = JsonUtility.ToJson(data, true);
 
+            // optionally encrypt the data
+            if (useEncryption)
+            {
+                dataToStore = EncryptDecrypt(dataToStore);
+            }
+
             // write the serialized data to the file
             using (FileStream stream = new FileStream(fullPath, FileMode.Create))
             {
@@ -72,5 +89,17 @@ public class FileDataHandler
         {
             Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
         }
+    }
+
+    // the below is a simple implementation of XOR encryption
+
+    private string EncryptDecrypt(string data)
+    {
+        string modifiedData = "";
+        for (int i = 0; i < data.Length; i++)
+        {
+            modifiedData += (char) (data[i] ^ encryptionCodeWord[i % encryptionCodeWord.Length]);
+        }
+        return modifiedData;
     }
 }

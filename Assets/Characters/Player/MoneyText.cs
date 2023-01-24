@@ -6,6 +6,7 @@ using TMPro;
 public class MoneyText : MonoBehaviour, IDataPersistence
 {
     public TextMeshProUGUI text;
+    
     private int money;
 
     void Start()
