@@ -5,9 +5,10 @@ using TMPro;
 
 public class MoneyText : MonoBehaviour, IDataPersistence
 {
+    public GameData gd;
     public TextMeshProUGUI text;
     
-    private int money;
+    private int moneys;
 
     void Start()
     {
@@ -16,19 +17,20 @@ public class MoneyText : MonoBehaviour, IDataPersistence
 
     public void LoadData(GameData data)
     {
-        this.money = data.money;
+        this.moneys = data.money;
     }
 
     public void SaveData(ref GameData data)
     {
-        data.money = this.money;
+        data.money = this.moneys;
     }
 
 
     void Update()
     {
+        moneys = gd.money;
         // prints money onto screen
-         string m = money.ToString();
+         string m = moneys.ToString();
          text.text = m;
     }
 }
