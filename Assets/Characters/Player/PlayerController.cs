@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour, IDataPersistence
 {
-    public GameData gd;
+    public GameData gData;
     public float moveSpeed = 1f;
     public Rigidbody2D rb;
     public Animator animator;
@@ -28,34 +28,21 @@ public class PlayerController : MonoBehaviour, IDataPersistence
         } else{
             moveSpeed = 1f;
         }
-
-                 // spend money for no reason
-                 if( Input.GetKeyDown(KeyCode.Space))
-           {
-                gd.money -= 100;
-                Debug.Log(" new balance = " + gd.money);
-           }
-      
-
-           if( Input.GetKeyDown(KeyCode.Escape))
-           {
-            DataPersistenceManager.instance.SaveGame();
-
-            SceneManager.LoadSceneAsync("GameLoader");
-           }
-    }
-
-    public void LoadData(GameData data)
-    {
-        this.transform.position = data.playerPosition;
-    }
-    public void SaveData(ref GameData data)
-    {
-        data.playerPosition = this.transform.position;
     }
 
     void FixedUpdate() {
         // Movement
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
+
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.playerPosition = this.transform.position;
+    }
+
 }

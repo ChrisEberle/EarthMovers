@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 12b8cdafda5d5cd45ab598ac280478e0
   - enabled: 1
-    path: Assets/Scenes/saveloadMenu/GameLoader.unity
+    path: Assets/Scenes/saveloadMenu/MainMenu.unity
     guid: 89341fcd9ceb9af478082c2cf9858519
   - enabled: 1
     path: Assets/Scenes/GameState.unity
